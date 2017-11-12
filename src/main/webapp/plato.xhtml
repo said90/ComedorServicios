@@ -19,34 +19,34 @@
 
 
                         <h:form>
-                            <h1><h:outputText value="Mesas Registradas" style="text-align: center"/></h1>
+                            <h1><h:outputText value="Platos Registrados" style="text-align: center"/></h1>
 
-                            <p:commandButton  onclick="PF('wgInsertar').show()" value="Registrar Mesa"/>
+                            <p:commandButton  onclick="PF('wgInsertar').show()" value="Registrar Platos"/>
 
-                            <p:dataTable value="#{mesaController.lstMesas}" var="item">
+                            <p:dataTable value="#{platoController.lstPlatos}" var="item">
                                 <p:column>
                                     <f:facet name="header">
-                                        <h:outputText value="Idmesa"/>
+                                        <h:outputText value="IdPlato"/>
                                     </f:facet>
-                                    <h:outputText value="#{item.idmesa}"/>
+                                    <h:outputText value="#{item.idplatillo}"/>
                                 </p:column>
                                 <p:column>
                                     <f:facet name="header">
-                                        <h:outputText value="NoMesa"/>
+                                        <h:outputText value="Descripcion"/>
                                     </f:facet>
-                                    <h:outputText value="#{item.noMesa}"/>
+                                    <h:outputText value="#{item.detalleProducto}"/>
+                                </p:column>
+                                <p:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Tipo de Menu"/>
+                                    </f:facet>
+                                    <h:outputText value="#{item.tipoMenu}"/>
                                 </p:column>
                                 <p:column>
                                     <f:facet name="header">
                                         <h:outputText value="Estado"/>
                                     </f:facet>
                                     <h:outputText value="#{item.estado}"/>
-                                </p:column>
-                                <p:column>
-                                    <f:facet name="header">
-                                        <h:outputText value="CantidadMaxima"/>
-                                    </f:facet>
-                                    <h:outputText value="#{item.cantidadMaxima}"/>
                                 </p:column>
                             </p:dataTable>
                         </h:form>
@@ -59,25 +59,30 @@
                 <!-- Div que contiene el dialogo para Registrar el producto --> 
                 <h:form>
                     <div>
-                        <p:dialog id="dlg" header="Registrar Mesa" showEffect="fade" hideEffect="fade"
+                        <p:dialog id="dlg" header="Registrar Plato" showEffect="fade" hideEffect="fade"
                                   widgetVar="wgInsertar" modal="true" draggable="false" resizable="false" minWidth="400"  >
                             <div>
                                 <h:form id="frmCrear" >
                                     <p:messages id="mensaje" />
 
-                                    <p:fieldset  legend="Informacion de Mesa"  style="border-style: solid; border-color: #000000; "  >
+                                    <p:fieldset  legend="Informacion de Plato"  style="border-style: solid; border-color: #000000; "  >
                                         <h:panelGrid columns="3" id="pgDatos"  >
 
-                                        <p:outputLabel for="txtNMesa" value="Numero de Mesa" />
-                                        <p:inputText id="txtNMesa" value="#{mesaController.mesa.noMesa}" required="true"/>
-                                        <p:message for="txtNMesa"/>
+                                            <p:outputLabel for="txtDescripcion" value="Descripcion" />
+                                            <p:inputText id="txtDescripcion" value="#{platoController.plato.detalleProducto}" required="true"/>
+                                            <p:message for="txtDescripcion"/>
 
-                                        <p:outputLabel for="txtMaxPersonas" value="Maximo de Personas"/>
-                                        <p:inputText id="txtMaxPersonas" value="#{mesaController.mesa.cantidadMaxima}" required="true"/>
-                                        <p:message for="txtMaxPersonas"/>
 
+                                            <p:outputLabel for="cboTipo" value="Tipo de Menu"/> 
+                                            <p:selectOneMenu id="cboTipo" value="#{platoController.plato.tipoMenu}"  required="true" >
+                                                <f:selectItem itemLabel="----Seleccione----" noSelectionOption="true"/>
+                                                <f:selectItem itemValue="Plato" itemLabel="Plato"/>
+                                                <f:selectItem itemValue="Bebida" itemLabel="Bebida"/>
+                                            </p:selectOneMenu>
+                                            <p:message for="cboTipo"/>
+                                            
                                             <p:outputLabel for="cboEstado" value="Estado"/> 
-                                            <p:selectOneMenu id="cboEstado" value="#{mesaController.mesa.estado}"  required="true" >
+                                            <p:selectOneMenu id="cboEstado" value="#{platoController.plato.estado}"  required="true" >
                                                 <f:selectItem itemLabel="----Seleccione----" noSelectionOption="true"/>
                                                 <f:selectItem itemValue="Disponible" itemLabel="Disponible"/>
                                                 <f:selectItem itemValue="No Disponible" itemLabel="No Disponible"/>
@@ -89,10 +94,10 @@
                                     </p:fieldset>
                                     <br/>
                                     <p:commandButton icon ="ui-icon-check" value="Registrar" 
-                                                     
-                                                     actionListener="#{mesaController.registrar()}"
+
+                                                     actionListener="#{platoController.registrarPlato()}"
                                                      onclick="PF('wgInsertar').hide();"
-                                                     action="mesa.xhtml?faces-redirect=true"
+                                                     action="platillos.xhtml?faces-redirect=true"
                                                      />
                                     <p:commandButton value="Regresar" onclick="PF('wgInsertar').hide();"/>
 
