@@ -11,6 +11,8 @@ import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
@@ -34,7 +36,7 @@ public class MesaController implements Serializable {
         lstMesas = mesaEJB.findAll();
     }
 
-    public void RegistrarMesa() {
+    public void registrarMesa() {
         mesaEJB.create(mesa);
     }
     
@@ -61,6 +63,20 @@ public class MesaController implements Serializable {
     public void setLstMesas(List<Mesa> lstMesas) {
         this.lstMesas = lstMesas;
     }
+    
+    public void registrar() {
+        try {
+            mesaEJB.create(mesa);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Mesa registrada con éxito"));
+            FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Aviso", "Error!"));
+
+        }
+
+    }
+    
+    
     
     
 }
