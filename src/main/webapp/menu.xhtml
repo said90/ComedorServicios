@@ -1,0 +1,106 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+
+        <ui:composition template="./plantilla.xhtml">
+
+
+
+            <ui:define name="content">
+
+                <h:form>
+                    <f:view>
+
+
+                        <h:form>
+                            <h1><h:outputText value="Menu" style="text-align: center"/></h1>
+
+                            <p:commandButton  onclick="PF('wgInsertar').show()" value="Registrar Menu"/>
+
+                            <p:dataTable value="#{mesaController.lstMesas}" var="item">
+                                <p:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="IdMenu"/>
+                                    </f:facet>
+                                    <h:outputText value="#{item.idmesa}"/>
+                                </p:column>
+                                <p:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Platillo"/>
+                                    </f:facet>
+                                    <h:outputText value="#{item.noMesa}"/>
+                                </p:column>
+                                <p:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Precio"/>
+                                    </f:facet>
+                                    <h:outputText value="#{item.estado}"/>
+                                </p:column>
+                                
+                            </p:dataTable>
+                        </h:form>
+                    </f:view>
+
+
+
+                </h:form>
+
+                <!-- Div que contiene el dialogo para Registrar el producto --> 
+                <h:form>
+                    <div>
+                        <p:dialog id="dlg" header="Registrar Mesa" showEffect="fade" hideEffect="fade"
+                                  widgetVar="wgInsertar" modal="true" draggable="false" resizable="false" minWidth="400"  >
+                            <div>
+                                <h:form id="frmCrear" >
+                                    <p:messages id="mensaje" />
+
+                                    <p:fieldset  legend="Informacion de Mesa"  style="border-style: solid; border-color: #000000; "  >
+                                        <h:panelGrid columns="3" id="pgDatos"  >
+
+                                        <p:outputLabel for="txtNMesa" value="Numero de Mesa" />
+                                        <p:inputText id="txtNMesa" value="#{mesaController.mesa.noMesa}" required="true"/>
+                                        <p:message for="txtNMesa"/>
+
+                                        <p:outputLabel for="txtMaxPersonas" value="Maximo de Personas"/>
+                                        <p:inputText id="txtMaxPersonas" value="#{mesaController.mesa.cantidadMaxima}" required="true"/>
+                                        <p:message for="txtMaxPersonas"/>
+
+                                            <p:outputLabel for="cboEstado" value="Estado"/> 
+                                            <p:selectOneMenu id="cboEstado" value="#{mesaController.mesa.estado}"  required="true" >
+                                                <f:selectItem itemLabel="----Seleccione----" noSelectionOption="true"/>
+                                                <f:selectItem itemValue="Disponible" itemLabel="Disponible"/>
+                                                <f:selectItem itemValue="No Disponible" itemLabel="No Disponible"/>
+                                            </p:selectOneMenu>
+                                            <p:message for="cboEstado"/>
+
+
+                                        </h:panelGrid>
+                                    </p:fieldset>
+                                    <br/>
+                                    <p:commandButton icon ="ui-icon-check" value="Registrar" 
+                                                     
+                                                     actionListener="#{mesaController.registrar()}"
+                                                     onclick="PF('wgInsertar').hide();"
+                                                     action="mesa.xhtml?faces-redirect=true"
+                                                     />
+                                    <p:commandButton value="Regresar" onclick="PF('wgInsertar').hide();"/>
+
+                                </h:form>
+                            </div>
+                        </p:dialog>
+                    </div>
+                </h:form>
+
+
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>
