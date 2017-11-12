@@ -5,10 +5,13 @@
  */
 package com.comedor.EJB;
 
+import com.comedor.model.Mesa;
 import com.comedor.model.Orden;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -28,5 +31,13 @@ public class OrdenFacade extends AbstractFacade<Orden> implements OrdenFacadeLoc
     public OrdenFacade() {
         super(Orden.class);
     }
+
+    @Override
+    public List<Mesa> mesasDisponible() {
+        List<Mesa> lista;
+        Query q = em.createNativeQuery("select * from mesa where mesa.estado='disponible'",Mesa.class);
+        lista= q.getResultList();
+        return lista;
+        }
     
 }

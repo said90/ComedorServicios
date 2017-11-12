@@ -1,0 +1,122 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+
+        <ui:composition template="./plantilla.xhtml">
+
+
+            <ui:define name="content">
+                <h:form id="frm" > 
+                    <p:panel header="Registro de ordenes" style="width: 1000px;margin: 0 auto; text-align:center ">                
+                        <p:layout id="capaDatosEntrada" style="width: 100%; height: 380px">
+                            <p:layoutUnit id="datosEntrada" position="center" 
+                                          style="padding: 5px; text-align: justify;font-size: 14px" 
+                                          size="600">
+                                <p:dataTable id="tblOrden" var="orden"  value="#{ordenController.lstOrdenes}"
+                                             emptyMessage="No hay ordenes en la base de datos"
+                                             paginator="true" rows="5" paginatorPosition="bottom"
+                                             paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks}
+                                             {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                             rowsPerPageTemplate="5" reflow="true" resizeMode="expand" rowExpandMode="multiply"  widgetVar="data" >
+
+                                    <f:facet name="header" >
+                                        <p:outputPanel style="height: available">
+                                            <h:outputText value="Buscar en todos los campos" style="padding-right: 20px"/>
+                                            <p:inputText  id="globalFilter" onkeyup= "PF('data').filter()" placeholder="Ingrese cualquier palabra o numero"  style="width: 350px"/> 
+                                            <p:commandButton  
+                                                value="Registrar Orden" icon="ui-icon-pencil"
+                                                onclick="PF('wgOrden').show();">
+                                                <p:effect type="pulsate" event="click" />
+                                            </p:commandButton>
+                                        </p:outputPanel>
+                                        <p:separator/>
+                                        <BR/>
+
+                                    </f:facet>
+
+
+
+                                    <p:column headerText="Fecha de Orden"   style="text-align: center">
+                                        <h:outputText value="#{orden.fecha}" />
+                                    </p:column>
+
+                                    <p:column headerText="Mesa asignada"  style="text-align: center">
+                                        <p:outputLabel value= "#{orden.idmesa.noMesa} " />
+                                    </p:column>
+
+                                    <p:column headerText="Total de Orden"  style="text-align: center">
+                                        <h:outputText value="#{orden.total}"/>
+                                    </p:column>
+
+
+                                    <p:column headerText="Estado de la Orden"   style="text-align: center">
+                                        <h:outputText value="#{orden.estado}" />
+                                    </p:column>
+
+
+                                    <p:column headerText="Detalle orden" style="text-align: center;">
+                                        <p:commandButton icon="ui-icon-pencil" oncomplete="PF('dlgmodificar').show();" 
+                                                          > 
+                                            <p:effect type="bounce" event="click" />
+
+                                        </p:commandButton>
+                                    </p:column>
+
+
+                                </p:dataTable>
+
+                            </p:layoutUnit>
+
+
+                        </p:layout>
+                    </p:panel>
+
+                    <p:dialog id="dlgOrden" widgetVar="wgOrden" modal="true" 
+                              resizable="false" showEffect="explode" hideEffect="explode" style="width: 700px">
+                        <p:panelGrid columns="3" layout="grid" >
+                            <p:outputLabel value="Fecha de la orden" style="font-weight: bold" />
+                            <p:calendar id="txtFecha"  navigator="true"  showOn="button" placeholder="dia/mes/año"
+                                        selectOtherMonths="true" title="Fecha que se toma orden" showButtonPanel="true"
+                                        
+                                        yearRange="c-100:c-0" locale="es" pattern="dd/MM/yyyy" 
+                                        required="true" value="#{ordenController.orden.fecha}"
+                                        />
+
+                        </p:panelGrid>
+
+                        <p:panelGrid columns="2" layout="grid">
+                            <p:outputLabel value="Asignar Mesa Disponible" style="font-weight: bold" />
+                            <p:selectOneMenu converter="entityConverter" effect="fade"
+                                             style=" width: 150px" required="true"
+                                             requiredMessage="Debe seleccionar una mesa"
+                                             filter="true" filterMatchMode="contains"
+                                             value="#{ordenController.orden.idmesa}"
+                                             >
+                                <f:selectItem itemLabel="  --  Seleccione  --" itemValue="#{null}"/>
+                                <f:selectItems itemLabel="#{mesa.noMesa}" var="mesa" 
+                                               value="#{ordenController.lstMesaDisponible}"
+                                               itemValue="#{mesa}"/>
+
+                            </p:selectOneMenu>
+                            
+
+                        </p:panelGrid>
+                        <p:commandButton value="Registrar Orden" actionListener="#{ordenController.crearOrden()}" 
+                                         oncomplete="PF('wgOrden').hide()" update="frm:tblOrden"/>
+
+                    </p:dialog>
+
+                </h:form>
+            </ui:define>
+
+
+        </ui:composition>
+
+    </body>
+</html>
