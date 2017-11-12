@@ -26,9 +26,9 @@ public class Menu implements Serializable {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int idmenu;
     
-    @JoinColumn(name = "idPlatillo", referencedColumnName = "idPlatillo")
+    @JoinColumn(name = "idplatillo", referencedColumnName = "idplatillo")
     @ManyToOne
-    private int idPlatillo;
+    private CataloProductos idPlatillo;
     
     @Column(name="precio")
     private float precio;
@@ -41,13 +41,14 @@ public class Menu implements Serializable {
         this.idmenu = idmenu;
     }
 
-    public int getIdPlatillo() {
+    public CataloProductos getIdPlatillo() {
         return idPlatillo;
     }
 
-    public void setIdPlatillo(int idPlatillo) {
+    public void setIdPlatillo(CataloProductos idPlatillo) {
         this.idPlatillo = idPlatillo;
     }
+
 
     public float getPrecio() {
         return precio;
