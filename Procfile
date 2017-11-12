@@ -1,1 +1,1 @@
-web: java -Dserver.port=$PORT -jar target/SpringEureka-0.0.1-SNAPSHOT.war
+web: java -Dserver.port=$PORT -war target/Comedor-1.0-SNAPSHOT.war
