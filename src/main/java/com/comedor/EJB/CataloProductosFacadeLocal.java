@@ -11,7 +11,7 @@ import javax.ejb.Local;
 
 /**
  *
- * @author davsa
+ * @author bgarcia95
  */
 @Local
 public interface CataloProductosFacadeLocal {
