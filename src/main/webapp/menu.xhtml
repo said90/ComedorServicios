@@ -23,24 +23,24 @@
 
                             <p:commandButton  onclick="PF('wgInsertar').show()" value="Registrar Menu"/>
 
-                            <p:dataTable value="#{mesaController.lstMesas}" var="item">
+                            <p:dataTable value="#{menuController.lstMenus}" var="item">
                                 <p:column>
                                     <f:facet name="header">
                                         <h:outputText value="IdMenu"/>
                                     </f:facet>
-                                    <h:outputText value="#{item.idmesa}"/>
+                                    <h:outputText value="#{item.idmenu}"/>
                                 </p:column>
                                 <p:column>
                                     <f:facet name="header">
                                         <h:outputText value="Platillo"/>
                                     </f:facet>
-                                    <h:outputText value="#{item.noMesa}"/>
+                                    <h:outputText value="#{item.idPlatillo.detalleProducto}"/>
                                 </p:column>
                                 <p:column>
                                     <f:facet name="header">
                                         <h:outputText value="Precio"/>
                                     </f:facet>
-                                    <h:outputText value="#{item.estado}"/>
+                                    <h:outputText value="#{item.precio}"/>
                                 </p:column>
 
                             </p:dataTable>
@@ -64,7 +64,7 @@
                                         <h:panelGrid columns="3" id="pgDatos"  >
 
                                             <p:outputLabel for="cboPlatillo" value="Platillo"/> 
-                                            <h:selectOneMenu value="#{menuController.plato}" id="cboPlatillo">
+                                            <h:selectOneMenu value="#{menuController.plato.idplatillo}" id="cboPlatillo">
                                                 <f:selectItems value="#{menuController.lstPlatos}" var="plato" itemValue="#{plato.idplatillo}" itemLabel="#{plato.detalleProducto}" />
                                             </h:selectOneMenu>
                                             <p:message for="cboPlatillo"/> 
