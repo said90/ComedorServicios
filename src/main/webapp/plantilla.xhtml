@@ -3,43 +3,138 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui"
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <title>Restaurante</title>
+
+        <title>Rocky</title>
+
+        <style>
+            #myNavbar .navbar-nav > li a:hover{
+                border-bottom: 3px solid #46B7B9;
+
+
+            }
+            #myNavbar .navbar-right > li a:hover{
+
+                border-bottom: none;
+
+            }
+
+
+        </style>
+
+        <style>
+
+            .dropdown-menu .sub-menu {
+                left: 100%;
+                position: absolute;
+                top: 0;
+                visibility: hidden;
+                margin-top: -1px;
+
+            }
+
+            .dropdown-menu li:hover .sub-menu {
+                visibility: visible;
+
+            }
+
+            .dropdown:hover .dropdown-menu {
+                display: block;
+
+            }
+
+            .nav-tabs .dropdown-menu, .nav-pills .dropdown-menu, .navbar .dropdown-menu {
+                margin-top: 0;
+            }
+
+            .navbar .sub-menu:before {
+                border-bottom: 7px solid transparent;
+                border-left: none;
+                border-right: 7px solid rgba(0, 0, 0, 0.2);
+                border-top: 7px solid transparent;
+                left: -7px;
+                top: 10px;
+
+            }
+            .navbar .sub-menu:after {
+                border-top: 6px solid transparent;
+                border-left: none;
+                border-right: 6px solid #fff;
+                border-bottom: 6px solid transparent;
+                left: 10px;
+                top: 11px;
+                left: -6px;
+
+            }
+        </style>  
     </h:head>
 
     <h:body>
 
-        <div id="top" class="top">
+        <div id="top">
             <ui:insert name="top">
-                <h:form>  
 
+                <h:form>
+                    <b:container class="container"><!--aca va el logo-->
+                        <b:row>
+                            <b:column col-md="4">
+                                <a href="/TeneriaApp/inicioAdm.xhtml"> <img src="/Comedor/recursos/imagenes/taquitopan.JPG" class="img-thumbnail" alt="Logo Original" width="175" height="50" style="border: none;" /></a> 
+                            </b:column>
+                        </b:row><!--aca acaba el logo-->
+                    </b:container>
 
-                    <p:menubar>
-                        <p:submenu label="Catalogos" icon="ui-icon-document">
+                    <b:container>
+                        <b:navBar class="navbar navbar-inverse" ><!--Aca empieza la navbar-->
+                            <b:container fluid="true">
+                                <b:navbarLinks>
+                                    <b:navLink value="Inicio" href="/TeneriaApp/inicioAdm.xhtml"></b:navLink>
 
-                            <p:menuitem value="Platillos" url="plato.xhtml" />
-                            <p:separator />
-                            <p:menuitem value="Mesas" url="mesa.xhtml" />
-                        </p:submenu>
+                                    <b:dropMenu value="Catálogos">
+                                        <b:navLink value="Mesas" href="/Comedor/mesa.xhtml"></b:navLink>
+                                        <b:navLink value="Platos" href="/Comedor/plato.xhtml"></b:navLink>
+                                    </b:dropMenu>
 
-                        <p:submenu label="Acciones" icon="ui-icon-pencil">
-                            <p:menuitem value="Ordenar" url="ordenar.xhtml" icon="ui-icon-arrowreturnthick-1-w" />
-                            <p:menuitem value="Mesas Disponibles" url="mesas_disponibles.xhtml" icon="ui-icon-arrowreturnthick-1-e" />
-                            <p:menuitem value="Menu Comida" url="menu.xhtml" icon="ui-icon-arrowreturnthick-1-e" />
-                        </p:submenu>
-                    </p:menubar>
+                                    <b:dropMenu value="Acciones">
+                                        <b:navLink value="Ordenar" href="/Comedor/ordenar.xhtml"></b:navLink>
+                                        <b:navLink value="Mesas Disponibles" href="/Comedor/mesas_disponibles.xhtml"></b:navLink>
+                                        <b:navLink value="Menu" href="/Comedor/menu.xhtml"></b:navLink>
+                                    </b:dropMenu>
+
+                                </b:navbarLinks>
+
+                                <ul class="nav navbar-nav navbar-right">
+                                    <li><h:commandLink actionListener="#{loginController.cerrarSesion()}" action="/login.xhtml?faces-redirect=true"><span class="glyphicon glyphicon-log-in" style="color:#921224;padding-right: 5px"></span>Cerrar Sesión</h:commandLink></li>
+                                </ul>
+
+                            </b:container>
+                        </b:navBar><!--Aca acaba la navbar-->
+                    </b:container>
                 </h:form>
             </ui:insert>
         </div>
 
+
         <div id="content" class="center_content">
-            <ui:insert name="content">Content</ui:insert>
+            <ui:insert name="content"></ui:insert>
         </div>
 
+        <div id="bottom">
+            <ui:insert name="bottom"></ui:insert>
+            <b:container>
+                <b:row>
+                    <b:column col-lg="12" style="text-align: center">
+                        <strong> Copyright © 2017</strong>
+                    </b:column>
+                </b:row>
+                <br/>
+            </b:container>
+        </div>
+        <h:outputScript library="js" name="spanishLocale.js" />
     </h:body>
 
 </html>

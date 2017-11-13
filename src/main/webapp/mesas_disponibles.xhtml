@@ -4,7 +4,7 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:b="http://bootsfaces.net/ui">
 
     <body>
 
@@ -14,45 +14,33 @@
 
             <ui:define name="content">
 
-                <h:form>
-                    <f:view>
+                <!--Aca ira todo el contenido-->
+                <b:container>
+                    <b:panel collapsible="false" look="primary" 
+                             style="text-align: center;border-color: black;">
+                        <f:facet name="heading">
+                            <h4>Gestión de Mesa</h4>
+                        </f:facet>
+                        <b:column col-lg="12" >
+                            <br/>
 
+                            <b:panel look="primary" collapsible="false" style="border-color: black;text-align: center">
+                                <f:facet name="heading">
+                                    <h4>Mesas Registradas</h4>
+                                </f:facet>
+                                <h:form id="frmMostrar">
 
-                        <h:form>
-                            <h1><h:outputText value="Mesas Registradas" style="text-align: center"/></h1>
-
-                            <p:dataTable value="#{ordenController.lstMesaDisponible}" var="item">
-                                <p:column>
-                                    <f:facet name="header">
-                                        <h:outputText value="Idmesa"/>
-                                    </f:facet>
-                                    <h:outputText value="#{item.idmesa}"/>
-                                </p:column>
-                                <p:column>
-                                    <f:facet name="header">
-                                        <h:outputText value="NoMesa"/>
-                                    </f:facet>
-                                    <h:outputText value="#{item.noMesa}"/>
-                                </p:column>
-                                <p:column>
-                                    <f:facet name="header">
-                                        <h:outputText value="CantidadMaxima"/>
-                                    </f:facet>
-                                    <h:outputText value="#{item.cantidadMaxima}"/>
-                                </p:column>
-                                <p:column>
-                                    <f:facet name="header">
-                                        <h:outputText value="Estado"/>
-                                    </f:facet>
-                                    <h:outputText value="#{item.estado}"/>
-                                </p:column>
-                            </p:dataTable>
-                        </h:form>
-                    </f:view>
-
-
-
-                </h:form>
+                                    <b:dataTable value="#{mesaController.lstMesas}" var="mesa" responsive="true" widgetVar="dtU" style="text-align: center">
+                                        <b:dataTableColumn label="IdMesa" value="#{mesa.idmesa}" style="text-align: center"/>
+                                        <b:dataTableColumn label="N° de Mesa" value="#{mesa.noMesa}" style="text-align: center"/>
+                                        <b:dataTableColumn label="Cantidad Maxima" value="#{mesa.cantidadMaxima}" style="text-align: center"/>
+                                        <b:dataTableColumn label="Estado" value="#{mesa.estado}" style="text-align: center"/>                                      
+                                    </b:dataTable>
+                                </h:form>
+                            </b:panel>
+                        </b:column>
+                    </b:panel>
+                </b:container>
 
             </ui:define>
 

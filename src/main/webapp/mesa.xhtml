@@ -4,7 +4,8 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:b="http://bootsfaces.net/ui">
 
     <body>
 
@@ -14,93 +15,108 @@
 
             <ui:define name="content">
 
-                <h:form>
-                    <f:view>
 
 
-                        <h:form>
-                            <h1><h:outputText value="Mesas Registradas" style="text-align: center"/></h1>
 
-                            <p:commandButton  onclick="PF('wgInsertar').show()" value="Registrar Mesa"/>
+                <!--Aca ira todo el contenido-->
+                <b:container>
+                    <b:panel collapsible="false" look="primary" 
+                             style="text-align: center;border-color: black;">
+                        <f:facet name="heading">
+                            <h4>Gestión de Mesa</h4>
+                        </f:facet>
+                        <b:column col-lg="12" >
+                            <br/>
+                            <b:column col-md="4"></b:column >
+                            <b:column col-md="4" style="padding-left:55px">
+                                <h:commandButton class="form-control" value="Registrar Mesa" onclick="$('#modalRegistrar').modal('show');" style="background-color:#D2D4D6;color: black;border-color: black" immediate="true" />
 
-                            <p:dataTable value="#{mesaController.lstMesas}" var="item">
-                                <p:column>
-                                    <f:facet name="header">
-                                        <h:outputText value="Idmesa"/>
+                            </b:column >
+
+                            <br/><br/><br/>
+                            <b:panel look="primary" collapsible="false" style="border-color: black;text-align: center">
+                                <f:facet name="heading">
+                                    <h4>Mesas Registradas</h4>
+                                </f:facet>
+                                <h:form id="frmMostrar">
+
+                                    <b:dataTable value="#{mesaController.lstMesas}" var="mesa" responsive="true" widgetVar="dtU" style="text-align: center">
+                                        <b:dataTableColumn label="IdMesa" value="#{mesa.idmesa}" style="text-align: center"/>
+                                        <b:dataTableColumn label="N° de Mesa" value="#{mesa.noMesa}" style="text-align: center"/>
+                                        <b:dataTableColumn label="Cantidad Maxima" value="#{mesa.cantidadMaxima}" style="text-align: center"/>
+                                        <b:dataTableColumn label="Estado" value="#{mesa.estado}" style="text-align: center"/>                                      
+                                    </b:dataTable>
+                                </h:form>
+                            </b:panel>
+                        </b:column>
+                    </b:panel>
+                </b:container>
+
+
+
+                <b:modal id="modalRegistrar" title="Registro de Mesa" style="text-align: center" styleClass="modalPseudoClass" size="modal-lg" >
+                    <p:growl id="growlR" autoUpdate="false" severity="info, fatal" showSummary="true" showDetail="true"/>
+                    <h:form id="frmCrear">
+
+                        <b:row>
+                            <div class="col-lg-12" align="center">
+                                <b:panel look="primary" collapsible="false" style="width: 75%;border-color: black;text-align: center">
+                                    <f:facet name="heading">
+                                        <h4>Datos de la Mesa</h4>
                                     </f:facet>
-                                    <h:outputText value="#{item.idmesa}"/>
-                                </p:column>
-                                <p:column>
-                                    <f:facet name="header">
-                                        <h:outputText value="NoMesa"/>
-                                    </f:facet>
-                                    <h:outputText value="#{item.noMesa}"/>
-                                </p:column>
-                                <p:column>
-                                    <f:facet name="header">
-                                        <h:outputText value="Estado"/>
-                                    </f:facet>
-                                    <h:outputText value="#{item.estado}"/>
-                                </p:column>
-                                <p:column>
-                                    <f:facet name="header">
-                                        <h:outputText value="CantidadMaxima"/>
-                                    </f:facet>
-                                    <h:outputText value="#{item.cantidadMaxima}"/>
-                                </p:column>
-                            </p:dataTable>
-                        </h:form>
-                    </f:view>
+                                    <div class="panel-body" align="center">
+                                        <h:panelGrid id="grid" columns="3" cellpadding="5" style="text-align:  center">
 
+                                            <p:outputLabel for="txtNoMesa" value="N° de Mesa" />
 
+                                            <p:inputText id="txtNoMesa" class="form-control" value="#{mesaController.mesa.noMesa}" required="true" requiredMessage="Campo Requerido">
+                                                
+                                            </p:inputText> 
 
-                </h:form>
+                                            <p:message for="txtNoMesa" style="padding-left: 10px;"/>
 
-                <!-- Div que contiene el dialogo para Registrar el producto --> 
-                <h:form>
-                    <div>
-                        <p:dialog id="dlg" header="Registrar Mesa" showEffect="fade" hideEffect="fade"
-                                  widgetVar="wgInsertar" modal="true" draggable="false" resizable="false" minWidth="400"  >
-                            <div>
-                                <h:form id="frmCrear" >
-                                    <p:messages id="mensaje" />
-
-                                    <p:fieldset  legend="Informacion de Mesa"  style="border-style: solid; border-color: #000000; "  >
-                                        <h:panelGrid columns="3" id="pgDatos"  >
-
-                                        <p:outputLabel for="txtNMesa" value="Numero de Mesa" />
-                                        <p:inputText id="txtNMesa" value="#{mesaController.mesa.noMesa}" required="true"/>
-                                        <p:message for="txtNMesa"/>
-
-                                        <p:outputLabel for="txtMaxPersonas" value="Maximo de Personas"/>
-                                        <p:inputText id="txtMaxPersonas" value="#{mesaController.mesa.cantidadMaxima}" required="true"/>
-                                        <p:message for="txtMaxPersonas"/>
+                                            <p:outputLabel/><p:outputLabel/><p:outputLabel/>
 
                                             <p:outputLabel for="cboEstado" value="Estado"/> 
-                                            <p:selectOneMenu id="cboEstado" value="#{mesaController.mesa.estado}"  required="true" >
+                                            <h:selectOneMenu class="form-control" id="cboEstado" value="#{mesaController.mesa.estado}"  required="true" >
                                                 <f:selectItem itemLabel="----Seleccione----" noSelectionOption="true"/>
                                                 <f:selectItem itemValue="Disponible" itemLabel="Disponible"/>
-                                                <f:selectItem itemValue="No Disponible" itemLabel="No Disponible"/>
-                                            </p:selectOneMenu>
+                                                <f:selectItem itemValue="Ocupado" itemLabel="Ocupado"/>
+                                            </h:selectOneMenu>
                                             <p:message for="cboEstado"/>
 
+                                            <p:outputLabel/><p:outputLabel/><p:outputLabel/>
+
+                                            <p:outputLabel for="txtMaxPer" value="Capacidad Maxima:"/>
+
+                                            <p:inputText id="txtMaxPer" class="form-control" value="#{mesaController.mesa.cantidadMaxima}" required="true" validatorMessage="Ingrese solamante números." requiredMessage="Campo Requerido">
+                                                <f:validateDoubleRange minimum="1" maximum="9999" />
+                                            </p:inputText> 
+
+                                            <p:message for="txtMaxPer" style="padding-left: 10px;"/>
+
+                                            <p:outputLabel/><p:outputLabel/><p:outputLabel/>    
 
                                         </h:panelGrid>
-                                    </p:fieldset>
-                                    <br/>
-                                    <p:commandButton icon ="ui-icon-check" value="Registrar" 
-                                                     
-                                                     actionListener="#{mesaController.registrar()}"
-                                                     onclick="PF('wgInsertar').hide();"
-                                                     action="mesa.xhtml?faces-redirect=true"
-                                                     />
-                                    <p:commandButton value="Regresar" onclick="PF('wgInsertar').hide();"/>
+                                    </div>
+                                </b:panel><!--Aqui termina el primer panel-->
 
-                                </h:form>
+                                <b:column col-md="5"></b:column>
+                                <b:column col-md="3">
+
+                                    <b:commandButton id="btnRegistrarM" update=":frmMostrar,grid,growlR" actionListener="#{mesaController.registrar()}" value="Registrar" class="form-control" 
+                                                     style="background-color:#D2D4D6;color: black;border-color: black;width:80%" 
+                                                     action="mesa.xhtml?faces-redirect=true"/>
+                                </b:column>
                             </div>
-                        </p:dialog>
-                    </div>
-                </h:form>
+                            <b:column col-lg="2"></b:column>
+                        </b:row>
+
+                    </h:form>
+                    <f:facet name="footer">
+                        <b:button value="Cerrar" dismiss="modal" />
+                    </f:facet>
+                </b:modal>
 
 
             </ui:define>
