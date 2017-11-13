@@ -42,7 +42,7 @@
                                     </f:facet>
                                     <h:outputText value="#{item.estado}"/>
                                 </p:column>
-                                
+
                             </p:dataTable>
                         </h:form>
                     </f:view>
@@ -54,40 +54,33 @@
                 <!-- Div que contiene el dialogo para Registrar el producto --> 
                 <h:form>
                     <div>
-                        <p:dialog id="dlg" header="Registrar Mesa" showEffect="fade" hideEffect="fade"
+                        <p:dialog id="dlg" header="Registrar Menu" showEffect="fade" hideEffect="fade"
                                   widgetVar="wgInsertar" modal="true" draggable="false" resizable="false" minWidth="400"  >
                             <div>
                                 <h:form id="frmCrear" >
                                     <p:messages id="mensaje" />
 
-                                    <p:fieldset  legend="Informacion de Mesa"  style="border-style: solid; border-color: #000000; "  >
+                                    <p:fieldset  legend="Informacion de Menu"  style="border-style: solid; border-color: #000000; "  >
                                         <h:panelGrid columns="3" id="pgDatos"  >
 
-                                        <p:outputLabel for="txtNMesa" value="Numero de Mesa" />
-                                        <p:inputText id="txtNMesa" value="#{mesaController.mesa.noMesa}" required="true"/>
-                                        <p:message for="txtNMesa"/>
+                                            <p:outputLabel for="cboPlatillo" value="Platillo"/> 
+                                            <h:selectOneMenu value="#{menuController.plato}" id="cboPlatillo">
+                                                <f:selectItems value="#{menuController.lstPlatos}" var="plato" itemValue="#{plato.idplatillo}" itemLabel="#{plato.detalleProducto}" />
+                                            </h:selectOneMenu>
+                                            <p:message for="cboPlatillo"/> 
 
-                                        <p:outputLabel for="txtMaxPersonas" value="Maximo de Personas"/>
-                                        <p:inputText id="txtMaxPersonas" value="#{mesaController.mesa.cantidadMaxima}" required="true"/>
-                                        <p:message for="txtMaxPersonas"/>
-
-                                            <p:outputLabel for="cboEstado" value="Estado"/> 
-                                            <p:selectOneMenu id="cboEstado" value="#{mesaController.mesa.estado}"  required="true" >
-                                                <f:selectItem itemLabel="----Seleccione----" noSelectionOption="true"/>
-                                                <f:selectItem itemValue="Disponible" itemLabel="Disponible"/>
-                                                <f:selectItem itemValue="No Disponible" itemLabel="No Disponible"/>
-                                            </p:selectOneMenu>
-                                            <p:message for="cboEstado"/>
-
+                                            <p:outputLabel for="txtPrecio" value="Precio"/>
+                                            <p:inputText id="txtPrecio" value="#{menuController.menu.precio}" required="true"/>
+                                            <p:message for="txtPrecio"/>
 
                                         </h:panelGrid>
                                     </p:fieldset>
                                     <br/>
                                     <p:commandButton icon ="ui-icon-check" value="Registrar" 
-                                                     
-                                                     actionListener="#{mesaController.registrar()}"
+
+                                                     actionListener="#{menuController.registrarMenu()}"
                                                      onclick="PF('wgInsertar').hide();"
-                                                     action="mesa.xhtml?faces-redirect=true"
+                                                     action="menu.xhtml?faces-redirect=true"
                                                      />
                                     <p:commandButton value="Regresar" onclick="PF('wgInsertar').hide();"/>
 
