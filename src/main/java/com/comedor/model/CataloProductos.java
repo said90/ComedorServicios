@@ -18,6 +18,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -26,6 +28,7 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(name = "catalo_productos")
 
+@XmlRootElement
 public class CataloProductos implements Serializable {
 
     private static final long serialVersionUID = 1L;    
@@ -84,6 +87,7 @@ public class CataloProductos implements Serializable {
         this.estado = estado;
     }
 
+    @XmlTransient
     public List<Detalleorden> getDetalleordenList() {
         return detalleordenList;
     }

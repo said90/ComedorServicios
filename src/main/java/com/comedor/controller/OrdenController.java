@@ -5,8 +5,11 @@
  */
 package com.comedor.controller;
 
+import com.comedor.EJB.DetalleordenFacadeLocal;
 import com.comedor.EJB.MesaFacadeLocal;
 import com.comedor.EJB.OrdenFacadeLocal;
+import com.comedor.model.CataloProductos;
+import com.comedor.model.Detalleorden;
 import com.comedor.model.Mesa;
 import com.comedor.model.Orden;
 import java.io.Serializable;
@@ -26,28 +29,42 @@ public class OrdenController implements Serializable {
 
     private Mesa mesa;
     private Orden orden;
+    private Detalleorden detalle;
 
     @EJB
     private OrdenFacadeLocal ordenEJB;
     @EJB
     private MesaFacadeLocal mesaEJB;
+    @EJB
+    private DetalleordenFacadeLocal detalleEJB;
 
     private List<Orden> lstOrdenes;
     private List<Mesa> lstMesas;
     private List<Mesa> lstMesaDisponible;
+    private List<CataloProductos> lstMenuDisponibles;
+    private List<Detalleorden> lstDetalleOrden;
 
     @PostConstruct
     private void init() {
         mesa = new Mesa();
         orden = new Orden();
+        detalle= new Detalleorden();
         lstOrdenes = ordenEJB.findAll();
         lstMesas= mesaEJB.findAll();
         lstMesaDisponible= ordenEJB.mesasDisponible();
+        lstMenuDisponibles= ordenEJB.menuDisponible();
     }
 
     public void crearOrden() {
         ordenEJB.create(orden);
     }
+    
+    public void crearDetalle(){
+    detalleEJB.create(detalle);
+    lstDetalleOrden=ordenEJB.obtenerDetallePorOrden(orden);
+    }
+    
+    //Getter and Setters
 
     public Mesa getMesa() {
         return mesa;
@@ -88,6 +105,32 @@ public class OrdenController implements Serializable {
     public void setLstMesaDisponible(List<Mesa> lstMesaDisponible) {
         this.lstMesaDisponible = lstMesaDisponible;
     }
+
+    public List<CataloProductos> getLstMenuDisponibles() {
+        return lstMenuDisponibles;
+    }
+
+    public void setLstMenuDisponibles(List<CataloProductos> lstMenuDisponibles) {
+        this.lstMenuDisponibles = lstMenuDisponibles;
+    }
+
+    public Detalleorden getDetalle() {
+        return detalle;
+    }
+
+    public void setDetalle(Detalleorden detalle) {
+        this.detalle = detalle;
+    }
+
+    public List<Detalleorden> getLstDetalleOrden() {
+        return lstDetalleOrden;
+    }
+
+    public void setLstDetalleOrden(List<Detalleorden> lstDetalleOrden) {
+        this.lstDetalleOrden = lstDetalleOrden;
+    }
+    
+    
 
     
     

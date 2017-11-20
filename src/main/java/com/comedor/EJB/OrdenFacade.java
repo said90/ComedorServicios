@@ -5,6 +5,8 @@
  */
 package com.comedor.EJB;
 
+import com.comedor.model.CataloProductos;
+import com.comedor.model.Detalleorden;
 import com.comedor.model.Mesa;
 import com.comedor.model.Orden;
 import java.util.List;
@@ -39,5 +41,23 @@ public class OrdenFacade extends AbstractFacade<Orden> implements OrdenFacadeLoc
         lista= q.getResultList();
         return lista;
         }
+
+    @Override
+    public List<CataloProductos> menuDisponible() {
+        List<CataloProductos> lista;
+        Query q = em.createNativeQuery("select * from catalo_productos where estado='Disponible'",CataloProductos.class);
+        lista= q.getResultList();
+        return lista;
+    }
+
+    @Override
+    public List<Detalleorden> obtenerDetallePorOrden(Orden orden) {
+        List<Detalleorden> lista;
+        Query q = em.createNativeQuery("Select * from detalleOrden where idorden= ?1",Detalleorden.class);
+        q.setParameter(1, orden.getIdorden());
+        lista= q.getResultList();
+        return lista;
+        
+    }
     
 }

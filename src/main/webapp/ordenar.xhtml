@@ -61,8 +61,8 @@
 
 
                                     <p:column headerText="Detalle orden" style="text-align: center;">
-                                        <p:commandButton icon="ui-icon-pencil" oncomplete="PF('dlgmodificar').show();" 
-                                                          > 
+                                        <p:commandButton icon="ui-icon-pencil" oncomplete="PF('dlgDetalle').show();" 
+                                                         actionListener="#{ordenController.detalle.setIdorden(orden)}" > 
                                             <p:effect type="bounce" event="click" />
 
                                         </p:commandButton>
@@ -83,8 +83,8 @@
                             <p:outputLabel value="Fecha de la orden" style="font-weight: bold" />
                             <p:calendar id="txtFecha"  navigator="true"  showOn="button" placeholder="dia/mes/año"
                                         selectOtherMonths="true" title="Fecha que se toma orden" showButtonPanel="true"
-                                        
-                                        yearRange="c-100:c-0" locale="es" pattern="dd/MM/yyyy" 
+
+                                        yearRange="c-100:c-0" pattern="dd/MM/yyyy" 
                                         required="true" value="#{ordenController.orden.fecha}"
                                         />
 
@@ -92,19 +92,19 @@
 
                         <p:panelGrid columns="2" layout="grid">
                             <p:outputLabel value="Asignar Mesa Disponible" style="font-weight: bold" />
+
                             <p:selectOneMenu converter="entityConverter" effect="fade"
                                              style=" width: 150px" required="true"
                                              requiredMessage="Debe seleccionar una mesa"
                                              filter="true" filterMatchMode="contains"
-                                             value="#{ordenController.orden.idmesa}"
-                                             >
+                                             value="#{ordenController.orden.idmesa}">
                                 <f:selectItem itemLabel="  --  Seleccione  --" itemValue="#{null}"/>
                                 <f:selectItems itemLabel="#{mesa.noMesa}" var="mesa" 
                                                value="#{ordenController.lstMesaDisponible}"
                                                itemValue="#{mesa}"/>
 
                             </p:selectOneMenu>
-                            
+
 
                         </p:panelGrid>
                         <p:commandButton value="Registrar Orden" actionListener="#{ordenController.crearOrden()}" 
@@ -113,6 +113,64 @@
                     </p:dialog>
 
                 </h:form>
+
+                <p:dialog widgetVar="dlgDetalle" modal="true"  resizable="false" showEffect="explode" hideEffect="explode" style="width: 700px">
+                    <p:panel header="Detalle de orden" style="width: 1000px;margin: 0 auto; text-align:center ">
+                        <p:layout style="width: 100%; height: 380px">
+                            <p:layoutUnit position="center" style="padding: 5px; text-align: justify;font-size: 14px" 
+                                          size="600">
+                                <p:outputLabel value="#{ordenController.detalle.idorden.idorden}"/>
+
+                                <p:panelGrid columns="2" layout="grid">
+                                    <p:outputLabel value="Seleccione un platillo"/>
+                                    <p:selectOneMenu converter="entityConverter" effect="fade"
+                                                     style=" width: 150px" required="true"
+                                                     requiredMessage="Debe seleccionar un platillo"
+                                                     filter="true" filterMatchMode="contains"
+                                                     value="#{ordenController.detalle.idplatillo}" >
+                                        <f:selectItem itemLabel="  --  Seleccione  --" itemValue="#{null}"/>
+                                        <f:selectItems itemLabel="#{menu.detalleProducto}" var="menu" 
+                                                       value="#{ordenController. lstMenuDisponibles}"
+                                                       itemValue="#{menu}"/>
+
+                                    </p:selectOneMenu>
+                                    <p:outputLabel value="Cantidad"/>
+                                    <p:spinner value="#{ordenController.detalle.cantidad}" max="100" min="1" title="Cantidad" />
+                                    <p:outputLabel value="Precio"/>
+                                    <p:inputNumber symbol="$" value="#{ordenController.detalle.precio}"/>
+                                    <p:commandButton value="Agregar orden" actionListener="#{ordenController.crearDetalle()}" update="frm" />
+                                </p:panelGrid>
+
+
+
+
+
+                                <p:dataTable value="#{ordenController.lstDetalleOrden}" var="detalle">
+
+                                    <p:column headerText="Platillo">
+                                        <p:outputLabel value="#{detalle.idplatillo.detalleProducto}"/>
+                                    </p:column>
+
+                                    <p:column headerText="cantidad">
+                                        <p:outputLabel value="#{detalle.cantidad}"/>
+
+                                    </p:column>
+
+                                    <p:column headerText="precio">
+                                        <p:outputLabel value="#{detalle.precio}"/>
+
+                                    </p:column>
+
+                                    <p:column headerText="Total">
+
+                                    </p:column>
+
+
+                                </p:dataTable>
+                            </p:layoutUnit>
+                        </p:layout>
+                    </p:panel>
+                </p:dialog>
             </ui:define>
 
 

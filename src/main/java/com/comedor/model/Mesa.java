@@ -19,6 +19,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -27,6 +29,7 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(name = "mesa")
 
+@XmlRootElement
 public class Mesa implements Serializable {
 
     
@@ -84,6 +87,7 @@ public class Mesa implements Serializable {
         this.cantidadMaxima = cantidadMaxima;
     }
 
+    @XmlTransient
     public List<Orden> getOrdenList() {
         return ordenList;
     }

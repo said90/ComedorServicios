@@ -5,6 +5,8 @@
  */
 package com.comedor.EJB;
 
+import com.comedor.model.CataloProductos;
+import com.comedor.model.Detalleorden;
 import com.comedor.model.Mesa;
 import com.comedor.model.Orden;
 import java.util.List;
@@ -32,4 +34,8 @@ public interface OrdenFacadeLocal {
     int count();
     
     List<Mesa> mesasDisponible();
+    
+    List<CataloProductos> menuDisponible();
+    
+    List<Detalleorden> obtenerDetallePorOrden(Orden orden);
 }
